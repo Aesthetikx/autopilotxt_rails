@@ -16,7 +16,7 @@ describe ConversationsController do
         FactoryGirl.create(:conversation, created_at: Time.now + 1.minutes)
       ]
       get :new
-      expect(assigns(:conversations).to_a).to eq(conversations.sort_by { |c| c.created_at })
+      expect(assigns(:conversations).to_a).to eq(conversations.sort_by { |c| c.created_at }.reverse)
     end
   end
 
@@ -27,7 +27,7 @@ describe ConversationsController do
         FactoryGirl.create(:conversation, expires_at: Time.now + 4.minutes),
         FactoryGirl.create(:conversation, expires_at: Time.now + 1.minutes)
       ]
-      get :new
+      get :old
       expect(assigns(:conversations).to_a).to eq(conversations.sort_by { |c| c.expires_at })
     end
   end
