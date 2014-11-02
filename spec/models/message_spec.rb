@@ -7,6 +7,11 @@ describe Message do
     expect(message).to be_valid
   end
 
+  it 'has requires a body' do
+    message = FactoryGirl.create(:message, body: nil)
+    expect(message).not_to be_valid
+  end
+
   it 'has a non empty body' do
     message = FactoryGirl.create(:message, body: "")
     expect(message).not_to be_valid
@@ -14,7 +19,7 @@ describe Message do
 
   it 'has a datestamp' do
     message = FactoryGirl.create(:message)
-    expect(message.time).to be_a(Datetime)
+    expect(message.time).to be_a(DateTime)
   end
 
   it 'belongs to a conversation' do
@@ -22,8 +27,15 @@ describe Message do
     expect(message.conversation).to be_a(Conversation)
   end
 
-  it 'has a source'
+  it 'has valid sources uploader, recipient, autopilot' do
+    message = FactoryGirl.create(:message)
+    expect([0, 1, 2]).to include(message.source)
 
-  it 'has valid sources uploader, recipient, autopilot'
+    message = FactoryGirl.create(:message, source: 3)
+    expect(message).not_to be_valid
+
+    message = FactoryGirl.create(:message, source: -1)
+    expect(message).not_to be_valid
+  end
 
 end
