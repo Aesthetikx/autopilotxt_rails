@@ -30,10 +30,21 @@ describe Conversation do
     expect(conversation.live?).to be_false
   end
 
+  it 'is respondable if expiration date is more than 30 seconds in the future' do
+    expect(FactoryGirl.create(:conversation,
+                              expires_at: Time.now + 35.seconds
+                             ).respondable?).to be_true
+    expect(FactoryGirl.create(:conversation,
+                              expires_at: Time.now + 25.seconds
+                             ).respondable?).to be_false
+  end
+
   context 'scopes' do
 
     let(:expired_conv) { FactoryGirl.create(:conversation, expires_at: Time.now - 5.minutes) }
     let(:unexpired_conv) { FactoryGirl.create(:conversation, expires_at: Time.now + 5.minutes) }
+    let(:thirty_five) { FactoryGirl.create(:conversation, expires_at: Time.now + 35.seconds) }
+    let(:twenty_five) { FactoryGirl.create(:conversation, expires_at: Time.now + 25.seconds) }
 
     it 'has and expired scope' do
       expect(Conversation.expired).to include(expired_conv)
@@ -43,6 +54,10 @@ describe Conversation do
     it 'has a live scope' do
       expect(Conversation.live).to include(unexpired_conv)
       expect(Conversation.live).not_to include(expired_conv)
+    end
+
+    it 'has a respondable scope' do
+      expect(Conversation.respondable).to match_array([:unexpired_conv, :thirty_five])
     end
 
   end
