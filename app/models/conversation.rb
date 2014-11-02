@@ -1,6 +1,9 @@
 class Conversation < ActiveRecord::Base
   has_many :messages
+  has_many :responses
   belongs_to :user
+
+  acts_as_votable
 
   validates :expires_at, presence: true
   validates :user_id, presence: true
@@ -21,6 +24,10 @@ class Conversation < ActiveRecord::Base
 
   def respondable?
     expires_at > (Time.now + 30.seconds)
+  end
+
+  def score
+    (get_upvotes.size - get_downvotes.size) + responses.size
   end
 
 end
