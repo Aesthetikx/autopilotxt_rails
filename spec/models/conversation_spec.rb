@@ -11,7 +11,7 @@ describe Conversation do
   end
 
   it 'has many messages' do
-    expect(FactoryGirl.create(:conversation)).to be_a(Array)
+    expect(FactoryGirl.create(:conversation)).to respond_to(:messages)
   end
 
   it 'has an expiration datetime' do
