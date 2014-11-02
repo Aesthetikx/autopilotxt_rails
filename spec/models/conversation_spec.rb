@@ -53,14 +53,9 @@ describe Conversation do
       expect(Conversation.unsent).not_to include(sent)
     end
 
-    it 'has snet?' do
+    it 'has sent?' do
       expect(sent.sent?).to be_true
       expect(unsent.sent?).to be_false
-    end
-
-    it 'has unsent?' do
-      expect(sent.unsent?).to be_false
-      expect(unsent.unsent?).to be_true
     end
   end
 
