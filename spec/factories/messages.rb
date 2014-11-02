@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :message do
+    conversation
     body { Faker::Lorem.paragraph }
     time { Time.now }
   end
