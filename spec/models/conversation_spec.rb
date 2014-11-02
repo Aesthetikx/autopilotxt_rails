@@ -7,18 +7,15 @@ describe Conversation do
   end
 
   it 'belongs to a user' do
-    conversation = FactoryGirl.create(:conversation)
-    expect(conversation.user).to be_a(User)
+    expect(FactoryGirl.create(:conversation).user).to be_a(User)
   end
 
   it 'has many messages' do
-    conversation = FactoryGirl.create(:conversation)
-    expect(conversation.messages).to be_a(Array)
+    expect(FactoryGirl.create(:conversation)).to be_a(Array)
   end
 
   it 'has an expiration datetime' do
-    conversation = FactoryGirl.create(:conversation)
-    expect(conversation.expires_at).to be_a(DateTime)
+    expect(FactoryGirl.create(:conversation, expires_at: nil)).not_to be_valid
   end
 
 end
