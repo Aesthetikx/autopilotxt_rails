@@ -39,7 +39,32 @@ describe Conversation do
                              ).respondable?).to be_false
   end
 
-  context 'scopes' do
+  context 'sent / unsent' do
+    let(:sent) { FactoryGirl.create(:conversation, sent: true) }
+    let(:unsent) { FactoryGirl.create(:conversation, sent: false) }
+
+    it 'has a sent scope' do
+      expect(Conversation.sent).to include(sent)
+      expect(Conversation.sent).not_to include(unsent)
+    end
+
+    it 'has an unsent scope' do
+      expect(Conversation.unsent).to include(unsent)
+      expect(Conversation.unsent).not_to include(sent)
+    end
+
+    it 'has snet?' do
+      expect(sent.sent?).to be_true
+      expect(unsent.sent?).to be_false
+    end
+
+    it 'has unsent?' do
+      expect(sent.unsent?).to be_false
+      expect(unsent.unsent?).to be_true
+    end
+  end
+
+  context 'time scopes' do
 
     let(:expired_conv) { FactoryGirl.create(:conversation, expires_at: Time.now - 5.minutes) }
     let(:unexpired_conv) { FactoryGirl.create(:conversation, expires_at: Time.now + 5.minutes) }
