@@ -5,5 +5,6 @@ FactoryGirl.define do
     conversation
     body { Faker::Lorem.paragraph }
     time { Time.now }
+    source { [0, 1, 2].sample }
   end
 end
