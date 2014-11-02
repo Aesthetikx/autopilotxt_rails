@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
   validates :username, presence: true
 
   def submission_score
-    conversations.sent.map(&:score).inject(&:+) + conversations.size
+    conversations.sent.map(&:score).reduce(:+) + conversations.size
   end
 
   def response_score
-    response.map(&:score).inject(&:+)
+    responses.map(&:score).inject(:+)
   end
 
 end
