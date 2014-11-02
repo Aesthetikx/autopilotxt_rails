@@ -57,7 +57,7 @@ describe Conversation do
     end
 
     it 'has a respondable scope' do
-      expect(Conversation.respondable).to match_array([:unexpired_conv, :thirty_five])
+      expect(Conversation.respondable).to match_array([unexpired_conv, thirty_five])
     end
 
   end

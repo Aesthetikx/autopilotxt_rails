@@ -12,7 +12,7 @@ class Conversation < ActiveRecord::Base
   def live?
     expires_at > Time.now
   end
-  
+
   def expired?
     expires_at < Time.now
   end
