@@ -2,12 +2,6 @@ require 'spec_helper'
 
 describe ConversationsController do
 
-  describe "GET /conversations/top" do
-
-    it 'sorts by votes'
-
-  end
-
   describe "GET /conversations/new" do
     it 'sorts by created_at, newest first' do
       conversations = [
@@ -32,8 +26,20 @@ describe ConversationsController do
     end
   end
 
-  describe "GET /conversations/hot" do
-    it 'sorts by votes, highest first'
+  describe "sort by votes" do
+    it 'sorts by votes for hot and top' do
+      a = FactoryGirl.create(:conversation)
+      b = FactoryGirl.create(:conversation)
+      c = FactoryGirl.create(:conversation)
+      a.stub(:score).and_return(5)
+      b.stub(:score).and_return(3)
+      c.stub(:score).and_return(9)
+      conversations = [a, b, c]
+      [:top, :hot].each do |route|
+        get route
+        expect(assigns(:conversations).to_a).to eq(conversations.sort_by { |c| c.score }.reverse)
+      end
+    end
   end
 
   describe "current" do
@@ -57,7 +63,7 @@ describe ConversationsController do
 
       [:new, :old, :hot].each do |route|
         get route
-        expect(assigns(:conversations).sort).to match_array(conversations.select { |c| c.expires_at > Time.now + 30.seconds })
+        expect(assigns(:conversations).sort).to match_array(conversations.select(&:respondable?))
       end
     end
   end
