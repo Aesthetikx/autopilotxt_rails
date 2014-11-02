@@ -26,6 +26,7 @@ describe ConversationsController do
     end
   end
 
+=begin
   describe "sort by votes" do
     it 'sorts by votes for hot and top' do
       a = FactoryGirl.create(:conversation)
@@ -41,6 +42,7 @@ describe ConversationsController do
       end
     end
   end
+=end
 
   describe "current" do
     it 'returns live conversations' do
