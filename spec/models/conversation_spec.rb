@@ -15,17 +15,19 @@ describe Conversation do
   end
 
   it 'has an expiration datetime' do
-    expect(FactoryGirl.create(:conversation, expires_at: nil)).not_to be_valid
+    expect(FactoryGirl.build(:conversation, expires_at: nil)).not_to be_valid
   end
 
   it 'is live if expiration date is in the future' do
     conversation = FactoryGirl.create(:conversation, expires_at: Time.now + 5.minutes)
-    expect(conversation.live?).to be_false
+    expect(conversation.live?).to be_true
+    expect(conversation.expired?).to be_false
   end
 
   it 'is expired if expiration date is in the past' do
     conversation = FactoryGirl.create(:conversation, expires_at: Time.now - 5.minutes)
     expect(conversation.expired?).to be_true
+    expect(conversation.live?).to be_false
   end
 
   context 'scopes' do
