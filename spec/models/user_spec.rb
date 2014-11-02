@@ -14,4 +14,8 @@ describe User do
     expect(FactoryGirl.build(:user)).not_to be_blank
   end
 
+  it 'has many conversations' do
+    expect(FactoryGirl.build(:user)).to respond_to(:conversations)
+  end
+
 end
