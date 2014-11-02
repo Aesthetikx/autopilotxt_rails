@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'conversations/top'
+
+  get 'conversations/new'
+
+  get 'conversations/old'
+
+  get 'conversations/hot'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
