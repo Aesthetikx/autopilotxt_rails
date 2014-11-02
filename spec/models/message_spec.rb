@@ -24,13 +24,21 @@ describe Message do
 
   it 'has valid sources uploader, recipient, autopilot' do
     message = FactoryGirl.build(:message)
-    expect([0, 1, 2]).to include(message.source)
+    expect(message).to respond_to(:uploader?)
+    expect(message).to respond_to(:recipient?)
+    expect(message).to respond_to(:autopilot?)
+    expect(message).to respond_to(:uploader!)
+    expect(message).to respond_to(:recipient!)
+    expect(message).to respond_to(:autopilot!)
 
-    message = FactoryGirl.build(:message, source: 3)
-    expect(message).not_to be_valid
+    message.uploader!
+    expect(message.uploader?).to be_true
 
-    message = FactoryGirl.build(:message, source: -1)
-    expect(message).not_to be_valid
+    message.recipient!
+    expect(message.recipient?).to be_true
+
+    message.autopilot!
+    expect(message.autopilot?).to be_true
   end
 
 end

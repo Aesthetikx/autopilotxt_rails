@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  enum source: { uploader: 0, recipient: 1, autopilot: 2 }
+  enum source: [:uploader, :recipient, :autopilot]
 
   belongs_to :conversation
 
