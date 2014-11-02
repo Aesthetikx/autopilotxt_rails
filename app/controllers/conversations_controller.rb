@@ -3,6 +3,7 @@ class ConversationsController < ApplicationController
   end
 
   def new
+    render json: nil
   end
 
   def old

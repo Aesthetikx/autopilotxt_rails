@@ -15,7 +15,7 @@ describe ConversationsController do
         FactoryGirl.create(:conversation, expires_at: Time.now - 3.minutes),
         FactoryGirl.create(:conversation, expires_at: Time.now + 3.minutes)
       ]
-      get '/conversations/new'
+      get :new
       expect(assigns(:conversations)).to match_array(conversations.select(&:live?))
     end
 
@@ -24,7 +24,7 @@ describe ConversationsController do
         FactoryGirl.create(:conversation, expires_at: Time.now + 3.minutes),
         FactoryGirl.create(:conversation, expires_at: Time.now + 5.seconds)
       ]
-      get '/conversations/new'
+      get :new
       expect(assigns(:conversations).sort).to match_array(conversations.select { |c| c.expires_at > Time.now + 30.seconds })
     end
 
@@ -34,7 +34,7 @@ describe ConversationsController do
         FactoryGirl.create(:conversation, expires_at: Time.now + 4.minutes),
         FactoryGirl.create(:conversation, expires_at: Time.now + 1.minutes)
       ]
-      get '/conversations/new'
+      get :new
       expect(assigns(:conversations)).to eq(conversations.sort_by { |c| c.expires_at })
     end
 
