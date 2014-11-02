@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102033413) do
+ActiveRecord::Schema.define(version: 20141102034911) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
     t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "sent"
   end
 
   create_table "messages", force: true do |t|
