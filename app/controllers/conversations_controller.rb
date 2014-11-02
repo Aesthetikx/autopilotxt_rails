@@ -1,6 +1,7 @@
 class ConversationsController < ApplicationController
   def top
-    render json: nil
+    @conversations = Conversation.all.sort_by(&:score).reverse
+    render json: @conversations
   end
 
   def new
@@ -14,6 +15,7 @@ class ConversationsController < ApplicationController
   end
 
   def hot
-    render json: nil
+    @conversations = Conversation.respondable.sort_by(&:score).reverse
+    render json: @conversations
   end
 end
