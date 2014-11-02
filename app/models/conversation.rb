@@ -2,6 +2,8 @@ class Conversation < ActiveRecord::Base
   has_many :messages
   belongs_to :user
 
+  acts_as_votable
+
   validates :expires_at, presence: true
   validates :user_id, presence: true
 

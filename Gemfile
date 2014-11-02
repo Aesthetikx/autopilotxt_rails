@@ -25,3 +25,5 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
 end
+
+gem 'acts_as_votable', '~> 0.10.0'
