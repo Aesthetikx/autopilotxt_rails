@@ -1,4 +1,6 @@
 class ConversationsController < ApplicationController
+  include Votable
+
   def top
     @conversations = Conversation.all.sort_by(&:score).reverse
     render json: @conversations
