@@ -23,16 +23,10 @@ describe User do
     let(:user) { FactoryGirl.create(:user) }
 
     it 'has a score for responses' do
-      a = FactoryGirl.create(:response)
-      b = FactoryGirl.create(:response)
+      a = FactoryGirl.create(:response_with_votes, user: user, upvotes: 4, downvotes: 2) # 2
+      b = FactoryGirl.create(:response_with_votes, user: user, upvotes: 6, downvotes: 2) # 4
 
-      a.stub(:score).and_return(3)
-      b.stub(:score).and_return(2)
-
-      user.responses << a
-      user.responses << b
-
-      expect(user.response_score).to eq(5)
+      expect(user.response_score).to eq(6)
     end
 
     it 'has a score for conversations' do
