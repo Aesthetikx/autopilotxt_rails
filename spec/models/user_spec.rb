@@ -35,24 +35,18 @@ describe User do
       expect(user.response_score).to eq(5)
     end
 
-=begin
     it 'has a score for conversations' do
-      a = FactoryGirl.create(:conversation, sent: true)
-      b = FactoryGirl.create(:conversation, sent: false)
-      c = FactoryGirl.create(:conversation, sent: true)
+      a = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 5, downvotes: 2, sent: true)  # 4 (1 + 5 - 2)
+      b = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 3, downvotes: 5, sent: true)  # -1 (1 + 3 - 5)
+      c = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 7, downvotes: 1, sent: false) # 1 (unsent)
 
-      a.stub(:score).and_return(4)
-      b.stub(:score).and_return(5)
-      c.stub(:score).and_return(3)
+      # +3 for conversation a
+      3.times do
+        FactoryGirl.create(:response, conversation: a)
+      end
 
-      user.stub(:conversations).and_return([a, b, c])
-      user.conversations << a
-      user.conversations << b
-      user.conversations << c
-
-      expect(user.submission_score).to eq(4 + 3 + 2)
+      expect(user.submission_score).to eq(7)
     end
-=end
 
   end
 

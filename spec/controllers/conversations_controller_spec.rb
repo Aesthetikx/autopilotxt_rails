@@ -26,23 +26,17 @@ describe ConversationsController do
     end
   end
 
-=begin
   describe "sort by votes" do
     it 'sorts by votes for hot and top' do
-      a = FactoryGirl.create(:conversation)
-      b = FactoryGirl.create(:conversation)
-      c = FactoryGirl.create(:conversation)
-      a.stub(:score).and_return(5)
-      b.stub(:score).and_return(3)
-      c.stub(:score).and_return(9)
-      conversations = [a, b, c]
+      a = FactoryGirl.create(:conversation_with_votes, upvotes: 5, downvotes: 2) #3
+      b = FactoryGirl.create(:conversation_with_votes, upvotes: 8, downvotes: 1) #7
+      c = FactoryGirl.create(:conversation_with_votes, upvotes: 1, downvotes: 3) #-2
       [:top, :hot].each do |route|
         get route
-        expect(assigns(:conversations).to_a).to eq(conversations.sort_by { |c| c.score }.reverse)
+        expect(assigns(:conversations).to_a).to eq([b, a, c])
       end
     end
   end
-=end
 
   describe "current" do
     it 'returns live conversations' do
