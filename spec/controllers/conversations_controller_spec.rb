@@ -28,9 +28,9 @@ describe ConversationsController do
 
   describe "sort by votes" do
     it 'sorts by votes for hot and top' do
-      a = FactoryGirl.create(:conversation_with_votes, upvotes: 5, downvotes: 2) #3
-      b = FactoryGirl.create(:conversation_with_votes, upvotes: 8, downvotes: 1) #7
-      c = FactoryGirl.create(:conversation_with_votes, upvotes: 1, downvotes: 3) #-2
+      a = FactoryGirl.create(:conversation, upvotes: 5, downvotes: 2) #3
+      b = FactoryGirl.create(:conversation, upvotes: 8, downvotes: 1) #7
+      c = FactoryGirl.create(:conversation, upvotes: 1, downvotes: 3) #-2
       [:top, :hot].each do |route|
         get route
         expect(assigns(:conversations).to_a).to eq([b, a, c])

@@ -23,21 +23,16 @@ describe User do
     let(:user) { FactoryGirl.create(:user) }
 
     it 'has a score for responses' do
-      a = FactoryGirl.create(:response_with_votes, user: user, upvotes: 4, downvotes: 2) # 2
-      b = FactoryGirl.create(:response_with_votes, user: user, upvotes: 6, downvotes: 2) # 4
+      a = FactoryGirl.create(:response, user: user, upvotes: 4, downvotes: 2) # 2
+      b = FactoryGirl.create(:response, user: user, upvotes: 6, downvotes: 2) # 4
 
       expect(user.response_score).to eq(6)
     end
 
     it 'has a score for conversations' do
-      a = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 5, downvotes: 2, sent: true)  # 4 (1 + 5 - 2)
-      b = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 3, downvotes: 5, sent: true)  # -1 (1 + 3 - 5)
-      c = FactoryGirl.create(:conversation_with_votes, user: user, upvotes: 7, downvotes: 1, sent: false) # 1 (unsent)
-
-      # +3 for conversation a
-      3.times do
-        FactoryGirl.create(:response, conversation: a)
-      end
+      a = FactoryGirl.create(:conversation, user: user, upvotes: 5, downvotes: 2, response_count: 3, sent: true)  # 7 (1 + 5 - 2 + 3 responses)
+      b = FactoryGirl.create(:conversation, user: user, upvotes: 3, downvotes: 5, sent: true)  # -1 (1 + 3 - 5)
+      c = FactoryGirl.create(:conversation, user: user, upvotes: 7, downvotes: 1, sent: false) # 1 (unsent)
 
       expect(user.submission_score).to eq(7)
     end
